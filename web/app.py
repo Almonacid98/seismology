@@ -6,7 +6,6 @@ from main import create_app
 load_dotenv()
 
 app = Flask(__name__)
-
 apps = create_app()
 apps.app_context().push()
 
