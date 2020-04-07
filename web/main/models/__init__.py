@@ -1,0 +1,1 @@
+from .Seism import Seism as SeismModel
