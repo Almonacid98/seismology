@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request
+
 Verified_Seisms = {
     1: {'id' : '1' , 'datetime' : '25/08/2020' , 'magnitude' : '6.9'},
     2: {'id' : '2' , 'datetime' : '29/08/2020' , 'magnitude' : '8.1'}
@@ -13,16 +14,20 @@ Unverified_Seisms = {
 }
 
 
-class VerifiedSeisms(Resource):
+class VerifiedSeism(Resource):
     def get(self, id):
         if int(id) in Verified_Seisms:
             return Verified_Seisms[int(id)]
         return '', 404
-class VerifiedSeisms1(Resource):
+
+
+class VerifiedSeisms(Resource):
     def getreturn(self):
         return Verified_Seisms
 
-class UnverifiedSeisms(Resource):
+
+
+class UnverifiedSeism(Resource):
     def get(self, id):
         if int(id) in Unverified_Seisms:
             return Unverified_Seisms[int(id)]
@@ -39,6 +44,8 @@ class UnverifiedSeisms(Resource):
             del Unverified_Seisms[int(id)]
             return '', 204
         return '', 404
-class Univerfiedseisms1(Resource):
+
+
+class UnverifiedSeisms(Resource):
     def getreturn(self):
         return Unverified_Seisms

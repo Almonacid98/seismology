@@ -10,10 +10,12 @@ def create_app():
     app = Flask(__name__)
     load_dotenv()
 
-    api.add_resources(resources.VerifiedSeisms1Resource, 'Verified-Seisms')
-    api.add_resources(resources.VerifiedSeismsResource, '/Verified-Seisms/<id>')
-    api.add_resources(resources.UnverifiedSeisms1Resource, 'Unverified-Seism')
-    api.add_resources(resources.UnverifiedSeismsResource, 'Unverified-Seisms/<id>')
+    api.add_resource(resources.SensorsResource, 'Sensors')
+    api.add_resource(resources.SensorResource, '/Sensor/<id_num>')
+    api.add_resource(resources.VerifiedSeismsResource, 'Verified-Seisms')
+    api.add_resource(resources.VerifiedSeismResource, '/Verified-Seism/<id_num>')
+    api.add_resource(resources.UnverifiedSeismsResource, 'Unverified-Seism')
+    api.add_resource(resources.UnverifiedSeismResource, 'Unverified-Seism/<id_num>')
 
     api.init_app(app)
 
