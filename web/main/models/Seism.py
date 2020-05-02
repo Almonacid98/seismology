@@ -8,7 +8,7 @@ class Seism(db.Model):
     latitude = db.Column(db.String, nullable=False)
     longitude = db.Column(db.String, nullable=False)
     verified = db.Column(db.Boolean, nullable=False)
-    sensorid = db.Column(db.Integer, db.ForeignKey('sensor.id', ondelete="RESTRICT"), nullable=False)
+    sensorid = db.Column(db.Integer, db.ForeignKey('sensorid', ondelete="RESTRICT"), nullable=False)
 
     def __repr__(self):
         return '<Seism %r %r %r' % (self.magnitude, self.latitude, self.longitude)
