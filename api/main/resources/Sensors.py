@@ -1,5 +1,8 @@
 from flask_restful import Resource
-from flask import request
+from flask import request, jsonify
+from main import db
+from main.models import SensorModel
+from main.models.User import User as UserModel
 SENSORS = {
     1: {'numberS': '0008', 'name': 'Buenos Aires, Argentina', 'status': 'disable'},
     2: {'numberS': '0010', 'name': 'Madrid, España', 'status': 'enabled'},
@@ -12,21 +15,34 @@ SENSORS = {
 
 class Sensor(Resource):
     def get(self, id):
-        if int(id) in SENSORS:
-            return SENSORS[int(id)]
-        return '', 404
+        sensor = db.session.query(SensorModel).get_or_404(id)
+        return sensor.to_json()
     def put(self, id):
-        if int(id) in SENSORS:
-            sensor = SENSORS[int(id)]
-            data = request.get_json()
-            sensor.update(data)
-            return sensor, 201
-        return '', 404
+        sensor = db.session.query(SensorModel).get(id)
+        filters = request.get_json().items()
+        for key, value in filters:
+            if key == 'userid':
+                v = db.session.query(UserModel).get_or_404(value)
+                setattr(sensor, key, value)
+            else:
+                setattr(sensor, key, value)
+        db.session.add(sensor)
+        try:
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            return '', 409
+        return sensor.to_json(), 201
     def delete(self, id):
-        if int(id) in SENSORS:
-            del SENSORS[int(id)]
-            return '', 204
-        return '', 404
+        sensor = db.session.query(SensorModel).get_or_404(id)
+        db.session.delete(sensor)
+        try:
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            return '', 409
+        return '', 204
+
 
 class Sensors(Resource):
     def get(self):
