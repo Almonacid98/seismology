@@ -6,7 +6,7 @@ class Sensor(db.Model):
     port = db.Column(db.Integer, nullable = False)
     status = db.Column(db.Boolean, nullable = False)
     active = db.Column(db.Boolean, nullable = False)
-    userid = db.Column(db.Integer, db.ForeignKey("userid"), nullable=True)
+    userid = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
 
     def __repr__(self):
         return '<Sensor %r >' % (self.name)
@@ -19,7 +19,7 @@ class Sensor(db.Model):
             'port' : self.port,
             'status' : self.status,
             'active' : self.active,
-            'userid' : self.userid,
+            'user.id' : self.userid,
         }
         return sensor_json
     @staticmethod
@@ -29,7 +29,7 @@ class Sensor(db.Model):
         port = sensor_json.get('port')
         status = sensor_json.get('status')
         active = sensor_json.get('active')
-        userid = sensor_json.get('userid')
+        userid = sensor_json.get('user.id')
         return Sensor(
             name = name,
             ip = ip,
