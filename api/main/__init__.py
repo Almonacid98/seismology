@@ -23,7 +23,7 @@ def create_app():
     api.add_resource(resources.SensorResource, '/sensor/<id>')
     api.add_resource(resources.VerifiedSeismsResource, '/verified-seisms')
     api.add_resource(resources.VerifiedSeismResource, '/verified-seism/<id>')
-    api.add_resource(resources.UnverifiedSeismsResource, '/unverified-seism')
+    api.add_resource(resources.UnverifiedSeismsResource, '/unverified-seisms')
     api.add_resource(resources.UnverifiedSeismResource, '/unverified-seism/<id>')
     api.init_app(app)
 
