@@ -10,7 +10,7 @@ class VerifiedSeism(Resource):
         return verifiedseism.to_json()
 
 class VerifiedSeisms(Resource):
-    def getreturn(self):
+    def get(self):
         verifiedseisms = db.session.query(SeismModel).all()
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
 
@@ -36,6 +36,6 @@ class UnverifiedSeism(Resource):
 
 
 class UnverifiedSeisms(Resource):
-    def getreturn(self):
+    def get(self):
         unverifiedseisms = db.session.query(SeismModel).all()
         return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseisms in unverifiedseisms]})
