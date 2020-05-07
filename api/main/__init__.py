@@ -17,6 +17,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')
     db.init_app(app)
     import main.resources as resources
+    api.add_resource(resources.UsersResource, '/users')
+    api.add_resource(resources.UserResource, '/user/<id>')
     api.add_resource(resources.SensorsResource, '/sensors')
     api.add_resource(resources.SensorResource, '/sensor/<id>')
     api.add_resource(resources.VerifiedSeismsResource, '/verified-seisms')
