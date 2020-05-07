@@ -1,4 +1,2 @@
 Flask
 python-dotenv
-flask-restful
-flask-sqlalchemy
