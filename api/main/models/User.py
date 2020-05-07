@@ -10,21 +10,20 @@ class User(db.Model):
     #convert to JSON
     def to_json(self):
         user_json = {
-            'id' : self.id,
-            'email' : str(self.email),
-            'password' : str(self.password),
-            'admin' : self.admin,
+            'id': self.id,
+            'email': str(self.email),
+            'password': str(self.password),
+            'admin': self.admin
         }
         return user_json
+
+    # convert JSON to object
     @staticmethod
-    #convert JSON to object
     def from_json(user_json):
-        id = user_json.get('id')
         email = user_json.get('email')
         password = user_json.get('password')
         admin = user_json.get('admin')
-        return User(id = id,
-                    email = email,
-                    password = password,
-                    admin = admin,
+        return User(email=email,
+                    password=password,
+                    admin=admin
                     )

@@ -8,7 +8,7 @@ class Seism(db.Model):
     latitude = db.Column(db.String, nullable=False)
     longitude = db.Column(db.String, nullable=False)
     verified = db.Column(db.Boolean, nullable=False)
-    sensorid = db.Column(db.Integer, db.ForeignKey('sensor.id', ondelete="RESTRICT"), nullable=False)
+    # sensorid = db.Column(db.Integer, db.ForeignKey('sensor.id', ondelete="RESTRICT"), nullable=False)
 
     def __repr__(self):
         return '<Seism %r %r %r' % (self.magnitude, self.latitude, self.longitude)
@@ -21,8 +21,8 @@ class Seism(db.Model):
             'magnitude' : self.magnitude,
             'latitude' : self.latitude,
             'longitude' : self.longitude,
-            'verified' : self.verified,
-            'sensor.id' : self.sensorid,
+            'verified' : self.verified
+            #'sensor.id' : self.sensorid,
 
         }
         return seism_json
@@ -34,12 +34,12 @@ class Seism(db.Model):
         latitude = seism_json.get('latitude')
         longitude = seism_json.get('longitude')
         verified = seism_json.get('verified')
-        sensorid = seism_json.get('sensor.id')
+       # sensorid = seism_json.get('sensor.id')
         return Seism(datetime = datetime,
                      depth = depth,
                      magnitude = magnitude,
                      latitude = latitude,
                      longitude = longitude,
-                     verified = verified,
-                     sensorid = sensorid,
+                     verified = verified
+                     #sensorid = sensorid,
                      )
