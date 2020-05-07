@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask import request, jsonify
-
+from random import randint, uniform
+from datetime import datetime
 from main import db
 from main.models import SeismModel
 
@@ -14,6 +15,25 @@ class VerifiedSeisms(Resource):
         verifiedseisms = db.session.query(SeismModel).all()
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
 
+    def post(self):
+        seismnew = SeismModel(
+            datetime=datetime(
+                randint(1965, 2019),
+                randint(1, 12),
+                randint(1, 28),
+                randint(00, 23),
+                randint(0, 59),
+                randint(0, 59)
+            ),
+            depth=randint(5, 250),
+            magnitude=round(uniform(2.0, 5.5), 1),
+            latitude=uniform(-180, 180),
+            longitude=uniform(-90, 90),
+            verified=True
+            )
+        db.session.add(seismnew)
+        db.session.commit()
+        return seismnew.to_json(), 201
 
 
 class UnverifiedSeism(Resource):
@@ -39,3 +59,23 @@ class UnverifiedSeisms(Resource):
     def get(self):
         unverifiedseisms = db.session.query(SeismModel).all()
         return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseisms in unverifiedseisms]})
+
+    def post(self):
+        seismnew = SeismModel(
+            datetime=datetime(
+                randint(1965, 2019),
+                randint(1, 12),
+                randint(1, 28),
+                randint(00, 23),
+                randint(0, 59),
+                randint(0, 59)
+            ),
+            depth=randint(5, 250),
+            magnitude=round(uniform(2.0, 5.5), 1),
+            latitude=uniform(-180, 180),
+            longitude=uniform(-90, 90),
+            verified=False
+            )
+        db.session.add(seismnew)
+        db.session.commit()
+        return seismnew.to_json(), 201
