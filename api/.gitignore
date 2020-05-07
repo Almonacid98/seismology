@@ -5,5 +5,7 @@ lib64
 share/
 pyvenv.cfg
 .env
-**__pycache
+**__pycache__/
 .idea/
+**/desktop.ini
+/lib64/
