@@ -16,7 +16,7 @@ class Seism(db.Model):
     def to_json(self):
         seism_json = {
             'id' : self.id,
-            'datetime' : self.datetime,
+            'datetime' : self.datetime.isoformat(),
             'depth' : self.depth,
             'magnitude' : self.magnitude,
             'latitude' : self.latitude,
