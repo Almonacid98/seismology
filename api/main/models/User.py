@@ -4,7 +4,7 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable = False)
     password = db.Column(db.String(20), nullable = False)
     admin = db.Column(db.Boolean, nullable = False)
-
+    sensor = db.relationship('Sensor', back_populate = 'user')
     def __repr__(self):
         return '<User: %r >' % (self.email)
     #convert to JSON
