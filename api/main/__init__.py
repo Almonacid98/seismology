@@ -13,12 +13,10 @@ def create_app():
 
     if os.getenv('SQLALCHEMY_DATABASE_TYPE') == 'sqlite':  
     #Creación de archivo en base de datos (para SQLite) Post data: Se agregaron los .db que faltaban
-    if not os.path.exists(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'):
-        os.mknod(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db')
-
+         if not os.path.exists(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'):
+            os.mknod(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db')
     #URL CONFIG.BASE DE DATOS (BASE DE DATOS EN SQLITE)
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'
     
     #URL CONFIG.BASE DE DATOS (BASE DE DATOS MYSQL)
 
