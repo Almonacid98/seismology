@@ -9,12 +9,21 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     load_dotenv()
-    #Creación de archivo en base de datos (para SQLite)
-    if not os.path.exists(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')):
-        os.mknod(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME'))
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    #URL CONFIG.BASE DE DATOS
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')
+
+    if os.getenv('SQLALCHEMY_DATABASE_TYPE') == 'sqlite':  
+    #Creación de archivo en base de datos (para SQLite) Post data: Se agregaron los .db que faltaban
+    if not os.path.exists(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'):
+        os.mknod(os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db')
+
+    #URL CONFIG.BASE DE DATOS (BASE DE DATOS EN SQLITE)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')+'.db'
+    
+    #URL CONFIG.BASE DE DATOS (BASE DE DATOS MYSQL)
+
+    if os.getenv('SQLALCHEMY_DATABASE_TYPE') == 'mysql':
+      app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+os.getenv('SQLALCHEMY_DATABASE_USER')+':'+os.getenv('SQLALCHEMY_DATABASE_PASS')+'@'+os.getenv('SQLALCHEMY_DATABASE_IP')+'/'+os.getenv('SQLALCHEMY_DATABASE_NAME')  
     db.init_app(app)
 
     #verificación de la conexión sqlite
