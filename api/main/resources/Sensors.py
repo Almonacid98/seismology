@@ -23,7 +23,11 @@ class Sensor(Resource):
     def delete(self, id):
         sensor = db.session.query(SensorModel).get_or_404(id)
         db.session.delete(sensor)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            return '', 409
         return '', 204
 
 class Sensors(Resource):
