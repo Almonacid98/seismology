@@ -30,7 +30,14 @@ class Sensors(Resource):
 
     #obtener lista de recursos
     def get(self):
-        sensors = db.session.query(SensorModel).all()
+        filters = request.get_json().items()
+        sensors = db.session.query(SensorModel)
+        for key, value in filters:
+            if key == 'userid':
+                sensors = sensors.filters(SensorModel.userid == value)
+            if key == 'port':
+                sensors = sensors.filters(SensorModel.port == value)
+        sensors.all()
         return jsonify ({'sensors' : [sensor.to_json() for sensor in sensors]})
     #insertar recurso
 
