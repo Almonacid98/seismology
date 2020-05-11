@@ -16,6 +16,17 @@ def create_app():
     #URL CONFIG.BASE DE DATOS
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.getenv('SQLALCHEMY_DATABASE_PATH') + os.getenv('SQLALCHEMY_DATABASE_NAME')
     db.init_app(app)
+
+    #verificación de la conexión sqlite
+    if 'sqlite' in app.config['SQLALCHEMY_DATABASE_URI']:
+        def activatePrimaryKeys(conection, conection_record):
+            #ejecución del comando (activa claves foraneas en sqlite)
+            conection.execute('pragma foreign_keys = ON')
+        with app.app_context():
+            from sqlalchemy import event
+            #al realizar conexión con la base de datos llama a la función que activa las claves foraneas
+            event.listen(db.engine, 'connect', activatePrimaryKeys)
+            
     import main.resources as resources
     api.add_resource(resources.UsersResource, '/users')
     api.add_resource(resources.UserResource, '/user/<id>')
