@@ -12,7 +12,12 @@ class VerifiedSeism(Resource):
 
 class VerifiedSeisms(Resource):
     def get(self):
-        verifiedseisms = db.session.query(SeismModel).all()
+        filters = request.get_json().items()
+
+        verifiedseisms = db.session.query(SeismModel).filter(SeismModel.verified == True)
+        for (key, value) in filters:
+            
+
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
 
     def post(self):
