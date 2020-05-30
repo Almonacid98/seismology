@@ -81,7 +81,8 @@ class UnverifiedSeisms(Resource):
             magnitude=round(uniform(2.0, 5.5), 1),
             latitude=uniform(-180, 180),
             longitude=uniform(-90, 90),
-            verified=False
+            verified=False,
+            sensorid = randint(0, 5)
             )
         db.session.add(seismnew)
         db.session.commit()

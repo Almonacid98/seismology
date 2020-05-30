@@ -1,5 +1,5 @@
 from main import db
-from main.models import User
+from main.models.User import User
 class Sensor(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100), nullable = False)

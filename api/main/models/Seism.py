@@ -1,6 +1,6 @@
 from main import db
 import datetime as dt
-from main.models import Sensor
+from main.models.Sensor import Sensor
 class Seism(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     datetime = db.Column(db.DateTime, nullable=False)
