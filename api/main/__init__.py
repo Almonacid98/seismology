@@ -27,9 +27,9 @@ def create_app():
 
     #verificación de la conexión sqlite
     if 'sqlite' in app.config['SQLALCHEMY_DATABASE_URI']:
-        def activatePrimaryKeys(conection, conection_record):
+        def activatePrimaryKeys(connection, connection_record):
             #ejecución del comando (activa claves foraneas en sqlite)
-            conection.execute('pragma foreign_keys = ON')
+            connection.execute('pragma foreign_keys = ON')
         with app.app_context():
             from sqlalchemy import event
             #al realizar conexión con la base de datos llama a la función que activa las claves foraneas
