@@ -26,7 +26,7 @@ class VerifiedSeisms(Resource):
                 verifiedseisms = verifiedseisms.filter(SeismModel.id == value)
             verifiedseisms.all()
 
-        return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseism in verifiedseisms]})
+        return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
     def post(self):
         seismnew = SeismModel(
             datetime=datetime(
@@ -95,7 +95,7 @@ class UnverifiedSeisms(Resource):
             if key == 'sensorid':
                 unverifiedseisms = unverifiedseisms.filter(SeismModel.sensorid == value)
             unverifiedseisms.all()
-        return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseism in unverifiedseisms]})
+        return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseisms in unverifiedseisms]})
     def post(self):
         seismnew = SeismModel(
             datetime=datetime(
