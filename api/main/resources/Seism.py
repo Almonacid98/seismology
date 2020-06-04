@@ -12,15 +12,7 @@ class VerifiedSeism(Resource):
 
 class VerifiedSeisms(Resource):
     def get(self):
-        filters = request.get_json().items()
-
-        verifiedseisms = db.session.query(SeismModel).filter(SeismModel.verified == True)
-        for (key, value) in filters:
-            if key == 'datetime':
-                verifiedseisms = verifiedseisms.filter(SeismModel.datetime.like("%" + str(value) + "%"))
-            if key == 'magnitude':
-                verifiedseisms = verifiedseisms.filter(SeismModel.magnitude.like("%" + str(value) + "%"))
-    
+        verifiedseisms = db.session.query(SeismModel).all()
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
 
     def post(self):
