@@ -38,9 +38,14 @@ class Sensors(Resource):
         sensors = db.session.query(SensorModel)
         for key, value in filters:
             if key == 'userid':
-                sensors = sensors.filters(SensorModel.userid == value)
+                sensors = sensors.filter(SensorModel.userid == value)
             if key == 'port':
-                sensors = sensors.filters(SensorModel.port == value)
+                sensors = sensors.filter(SensorModel.port == value)
+            if key == "status":
+                sensors = sensors.filter(SensorModel.status == value)
+            if key == "active":
+                sensors = sensors.filter(SensorModel.active == value)
+
         sensors.all()
         return jsonify ({'sensors' : [sensor.to_json() for sensor in sensors]})
     #insertar recurso
