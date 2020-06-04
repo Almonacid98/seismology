@@ -46,11 +46,11 @@ class Sensors(Resource):
             if key == "active":
                 sensors = sensors.filter(SensorModel.active == value)
             if key == 'ip':
-                sensor = sensor.filter(SensorModel.ip == value)
+                sensors = sensors.filter(SensorModel.ip == value)
             if key == 'name':
-                sensor = sensor.filter(SensorModel.name == value)
+                sensors = sensors.filter(SensorModel.name == value)
             if key == 'id':
-                sensor = sensor.filter(SensorModel.id == value)
+                sensors = sensors.filter(SensorModel.id == value)
         sensors.all()
         return jsonify ({'sensors' : [sensor.to_json() for sensor in sensors]})
     #insertar recurso
