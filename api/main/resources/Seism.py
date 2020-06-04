@@ -17,9 +17,10 @@ class VerifiedSeisms(Resource):
         verifiedseisms = db.session.query(SeismModel).filter(SeismModel.verified == True)
         for (key, value) in filters:
             if key == 'datetime':
-                verifiedseisms = verifiedseisms.filters(SeismModel.datetime.like("%" + str(value) + "%"))
+                verifiedseisms = verifiedseisms.filter(SeismModel.datetime.like("%" + str(value) + "%"))
             if key == 'magnitude':
-                verifiedseisms = verifiedseisms.filters(SeismModel.magnitude.like("%" + str(value) + "%"))
+                verifiedseisms = verifiedseisms.filter(SeismModel.magnitude.like("%" + str(value) + "%"))
+    
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseisms in verifiedseisms]})
 
     def post(self):
@@ -64,7 +65,16 @@ class UnverifiedSeism(Resource):
 
 class UnverifiedSeisms(Resource):
     def get(self):
-        unverifiedseisms = db.session.query(SeismModel).all()
+        filters = request.get_json().items()
+
+        unverifiedseisms = db.session.query(SeismModel).filter(SeismModel.verified == True)
+        for (key, value) in filters:
+            if key == 'datetime':
+                unverifiedseisms = unverifiedseisms.filter(SeismModel.datetime.like("%" + str(value) + "%"))
+            if key == 'magnitude':
+                unverifiedseisms = unverifiedseisms.filter(SeismModel.magnitude.like("%" + str(value) + "%"))
+    
+
         return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseisms in unverifiedseisms]})
 
     def post(self):
