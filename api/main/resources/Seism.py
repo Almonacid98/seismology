@@ -27,6 +27,25 @@ class VerifiedSeisms(Resource):
             verifiedseisms.all()
 
         return jsonify({'verifiedseisms': [verifiedseisms.to_json() for verifiedseism in verifiedseisms]})
+    def post(self):
+        seismnew = SeismModel(
+            datetime=datetime(
+                randint(1965, 2019),
+                randint(1, 12),
+                randint(1, 28),
+                randint(00, 23),
+                randint(0, 59),
+                randint(0, 59)
+            ),
+            depth=randint(5, 250),
+            magnitude=round(uniform(2.0, 5.5), 1),
+            latitude=uniform(-180, 180),
+            longitude=uniform(-90, 90),
+            verified=True
+            )
+        db.session.add(seismnew)
+        db.session.commit()
+        return seismnew.to_json(), 201
 
 
 class UnverifiedSeism(Resource):
@@ -40,7 +59,7 @@ class UnverifiedSeism(Resource):
             if key == 'datatime':
                 setattr(unverifiedseism, key, datetime.strftime(value, "%Y-%m-%d %H:%M:%S"))
             elif key == 'sensorid':
-                a = db.session.query(SensorModel).get(value)
+                a = db.session.query(Sensor).get(value)
                 setattr(unverifiedseism, key, value)
             else:
                 setattr(unverifiedseism, key, value)
@@ -77,4 +96,22 @@ class UnverifiedSeisms(Resource):
                 unverifiedseisms = unverifiedseisms.filter(SeismModel.sensorid == value)
             unverifiedseisms.all()
         return jsonify({'unverifiedseisms': [unverifiedseisms.to_json() for unverifiedseism in unverifiedseisms]})
-   
+    def post(self):
+        seismnew = SeismModel(
+            datetime=datetime(
+                randint(1965, 2019),
+                randint(1, 12),
+                randint(1, 28),
+                randint(00, 23),
+                randint(0, 59),
+                randint(0, 59)
+            ),
+            depth=randint(5, 250),
+            magnitude=round(uniform(2.0, 5.5), 1),
+            latitude=uniform(-180, 180),
+            longitude=uniform(-90, 90),
+            verified=False
+            )
+        db.session.add(seismnew)
+        db.session.commit()
+        return seismnew.to_json(), 201
